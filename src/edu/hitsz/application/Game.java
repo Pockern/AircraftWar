@@ -1,7 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
-import edu.hitsz.bullet.AbstractBullet;
+import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -33,8 +33,8 @@ public class Game extends JPanel {
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
-    private final List<AbstractBullet> heroBullets;
-    private final List<AbstractBullet> enemyBullets;
+    private final List<BaseBullet> heroBullets;
+    private final List<BaseBullet> enemyBullets;
 
     private int enemyMaxNumber = 5;
 
@@ -155,10 +155,10 @@ public class Game extends JPanel {
     }
 
     private void bulletsMoveAction() {
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             bullet.forward();
         }
-        for (AbstractBullet bullet : enemyBullets) {
+        for (BaseBullet bullet : enemyBullets) {
             bullet.forward();
         }
     }
@@ -180,7 +180,7 @@ public class Game extends JPanel {
         // TODO 敌机子弹攻击英雄
 
         // 英雄子弹攻击敌机
-        for (AbstractBullet bullet : heroBullets) {
+        for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
                 continue;
             }
