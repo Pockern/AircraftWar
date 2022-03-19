@@ -56,7 +56,7 @@ public abstract class AbstractFlyingObject {
 
     /**
      * 有效（生存）标记，
-     * 通常标记为 false的对象会再下次刷新时清除
+     * 通常标记为 false的对象会在下次刷新时清除
      */
     protected boolean isValid = true;
 
@@ -78,7 +78,7 @@ public abstract class AbstractFlyingObject {
         locationX += speedX;
         locationY += speedY;
         if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
-            // 横向超出边界后反向
+            // 横向超出边界后反向，保证飞机不会飞出边界
             speedX = -speedX;
         }
     }

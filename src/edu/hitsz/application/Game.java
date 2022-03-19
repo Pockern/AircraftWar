@@ -185,21 +185,27 @@ public class Game extends JPanel {
                 continue;
             }
             for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+
+                // 已被其他子弹击毁的敌机，不再检测
+                // 避免多个子弹重复击毁同一敌机的判定
                 if (enemyAircraft.notValid()) {
-                    // 已被其他子弹击毁的敌机，不再检测
-                    // 避免多个子弹重复击毁同一敌机的判定
                     continue;
                 }
+
+                // 敌机撞击到英雄机子弹
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
-                    // 敌机损失一定生命值
+                    // 敌机损失子弹伤害的生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
+                    //子弹消失
                     bullet.vanish();
+                    //英雄机获得分数，并在敌机死亡处产生道具
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
                         score += 10;
                     }
                 }
+
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();

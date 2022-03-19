@@ -25,7 +25,8 @@ public class HeroAircraft extends AbstractAircraft {
     private int power = 30;
 
     /**
-     * 子弹射击方向 (向上发射：1，向下发射：-1)
+     * 子弹射击方向 (向上发射：1，向下发射：-1) （by teacher
+     * 以代码为准，maybe向上是-1，向下为1
      */
     private int direction = -1;
 
