@@ -28,7 +28,7 @@ public class HeroAircraft extends AbstractAircraft {
      * 子弹射击方向 (向上发射：1，向下发射：-1) （by teacher
      * 以代码为准，maybe向上是-1，向下为1
      */
-    private int direction = -1;
+    private int bullet_direction = -1;
 
     /**
      * @param locationX 英雄机位置x坐标
@@ -54,9 +54,9 @@ public class HeroAircraft extends AbstractAircraft {
     public List<BaseBullet> shoot() {
         List<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
+        int y = this.getLocationY() + bullet_direction *2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
+        int speedY = this.getSpeedY() + bullet_direction *5;
         BaseBullet baseBullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移

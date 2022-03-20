@@ -127,6 +127,10 @@ public abstract class AbstractFlyingObject {
         this.locationY = (int) locationY;
     }
 
+    public int getSpeedX() {
+        return speedX;
+    }
+
     public int getSpeedY() {
         return speedY;
     }
@@ -153,6 +157,7 @@ public abstract class AbstractFlyingObject {
         }
         return height;
     }
+
     public boolean notValid() {
         return !this.isValid;
     }
