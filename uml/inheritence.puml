@@ -12,7 +12,7 @@ BaseBullet           <|-- HeroBullet
 BaseBullet           <|-- EnemyBullet
 
 AbstractFlyingObject <|-- AbstractProps
-AbstractProps        <|-- HpProps
+AbstractProps        <|-- BloodProps
 AbstractProps        <|-- BombProps
 AbstractProps        <|-- FireProps
 
@@ -47,6 +47,7 @@ abstract class AbstractAircraft {
 
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
     + getHp(): int
     + {abstract} shoot(): List<BaseBullet>
 }
@@ -105,7 +106,7 @@ abstract class AbstractProps {
     + AbstractProps(int locationX, int locationY, int speedX, int speedY)
 }
 
-class HpProps {
+class BloodProps {
     -cure
 
     + HpProps(int locationX, int locationY, int speedX, int speedY)

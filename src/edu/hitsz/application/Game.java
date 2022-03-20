@@ -77,6 +77,9 @@ public class Game extends JPanel {
      */
     public void action() {
 
+        // 产生随机数以随机生成普通敌机或精英敌机
+        Random r = new Random();
+
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
 
@@ -84,15 +87,30 @@ public class Game extends JPanel {
 
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
+
+                //随机数产生，以产生战机概率和物品掉落概率(敌机概率含盖三种道具掉落及不掉落，为1 : 1 : 1 : 5)
+                int rd_enemy = r.nextInt(8);
+                int rd_props = r.nextInt(2);
+
                 System.out.println(time);
                 // 新敌机产生
-                if (enemyAircrafts.size() < enemyMaxNumber) {
+                // 普通敌机 : 精英敌机 = 3 : 1
+                if (enemyAircrafts.size() < enemyMaxNumber && rd_enemy <= 5) {
                     enemyAircrafts.add(new MobEnemy(
                             (int) ( Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()))*1,
                             (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2)*1,
                             0,
                             10,
                             30
+                    ));
+                }
+                else if (enemyAircrafts.size() < enemyMaxNumber) {
+                    enemyAircrafts.add(new EliteEnemy(
+                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) *1,
+                            (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) *1,
+                            0,
+                            10,
+                            60
                     ));
                 }
                 // 飞机射出子弹
@@ -149,7 +167,9 @@ public class Game extends JPanel {
 
     private void shootAction() {
         // TODO 敌机射击
-
+        for (AbstractAircraft enemy : enemyAircrafts) {
+            enemyBullets.addAll(enemy.shoot());
+        }
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
     }
@@ -178,7 +198,18 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // TODO 敌机子弹攻击英雄
+        for (BaseBullet enemy_bullet : enemyBullets) {
+            //子弹消失，则看下一战机的子弹是否命中
+            if (enemy_bullet.notValid()) {
+                continue;
+            }
 
+            //如果被敌机子弹命中，则降低英雄机血量，敌机子弹消失
+            if (heroAircraft.crash(enemy_bullet)) {
+                heroAircraft.decreaseHp(enemy_bullet.getPower());
+                enemy_bullet.vanish();
+            }
+        }
         // 英雄子弹攻击敌机
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
