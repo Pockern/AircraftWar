@@ -9,11 +9,10 @@ import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.props.BloodProps;
 import edu.hitsz.props.BombProps;
-import edu.hitsz.props.FireProps;
+import edu.hitsz.props.BulletProps;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -68,7 +67,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BloodProps.class.getName(), PROPS_BLOOD);
             CLASSNAME_IMAGE_MAP.put(BombProps.class.getName(), PROPS_BOMB);
-            CLASSNAME_IMAGE_MAP.put(FireProps.class.getName(), PROPS_FIRE);
+            CLASSNAME_IMAGE_MAP.put(BulletProps.class.getName(), PROPS_FIRE);
 
         } catch (IOException e) {
             e.printStackTrace();

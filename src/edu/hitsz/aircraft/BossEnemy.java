@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.props.AbstractProps;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,11 @@ public class BossEnemy extends AbstractAircraft {
 
     @Override
     public List<BaseBullet> shoot() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<AbstractProps> props_drop() {
         return new LinkedList<>();
     }
 }

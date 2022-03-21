@@ -13,11 +13,6 @@ abstract public class AbstractProps extends AbstractFlyingObject {
     public void forward() {
         super.forward();
 
-        //x出界
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
-            vanish();
-        }
-
         //y出界(向下)
         if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT) {
             vanish();

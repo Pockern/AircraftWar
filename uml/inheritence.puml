@@ -50,6 +50,7 @@ abstract class AbstractAircraft {
     + increaseHp(int increase): void
     + getHp(): int
     + {abstract} shoot(): List<BaseBullet>
+    + {abstract} props_drop(): List<AbstractProps>
 }
 
 class HeroAircraft {
@@ -60,6 +61,7 @@ class HeroAircraft {
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
+    + props_drop(): List<AbstractProps>
 }
 
 class MobEnemy {
@@ -67,6 +69,7 @@ class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
+    + props_drop(): List<AbstractProps>
 }
 
 class EliteEnemy {
@@ -74,13 +77,15 @@ class EliteEnemy {
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
+    + props_drop(): List<AbstractProps>
 }
 
 class BossEnemy {
 
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
-    +shoot(): List<BaseBullet>
+    + shoot(): List<BaseBullet>
+    + props_drop(): List<AbstractProps>
 }
 
 class BaseBullet {
@@ -104,13 +109,14 @@ class HeroBullet {
 abstract class AbstractProps {
 
     + AbstractProps(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
 }
 
 class BloodProps {
-    -cure
+    -treatment: int
 
     + HpProps(int locationX, int locationY, int speedX, int speedY)
-    - getCure(): int
+    + getTreatment(): int
 }
 
 class BombProps {

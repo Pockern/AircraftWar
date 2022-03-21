@@ -3,9 +3,14 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.props.AbstractProps;
+import edu.hitsz.props.BloodProps;
+import edu.hitsz.props.BombProps;
+import edu.hitsz.props.BulletProps;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 精英敌机
@@ -35,20 +40,43 @@ public class EliteEnemy extends AbstractAircraft {
 
     @Override
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-
+        List<BaseBullet> res_bullet = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + bullet_direction *2;
-
         int speedX = 0;
-        int speedY = this.getSpeedY() + bullet_direction *5;
-
+        int speedY = this.getSpeedY() + bullet_direction *4;
         BaseBullet baseBullet;
-
         for(int i = 0; i < shootNum; i++) {
             baseBullet = new EnemyBullet(x, y, speedX, speedY, power);
-            res.add(baseBullet);
+            res_bullet.add(baseBullet);
         }
-        return res;
+        return res_bullet;
+    }
+
+    @Override
+    public List<AbstractProps> props_drop() {
+        List<AbstractProps> res_props = new LinkedList<>();
+        int x = this.getLocationX();
+        int y = this.getLocationY();
+        int speedX = 0;
+        int speedY = this.getSpeedY();
+        AbstractProps abstractProps;
+
+        //嘿嘿嘿，随机数来喽~，产生三种道具和无掉落为1 : 1 : 1 : 1
+        Random r = new Random();
+        int rd_props = r.nextInt(4);
+
+        if (rd_props == 0) {
+            abstractProps = new BloodProps(x, y, speedX, speedY);
+            res_props.add(abstractProps);
+        } else if (rd_props == 1) {
+            abstractProps = new BombProps(x, y, speedX, speedY);
+            res_props.add(abstractProps);
+        } else if(rd_props == 2) {
+            abstractProps = new BulletProps(x, y, speedX, speedY);
+            res_props.add(abstractProps);
+        }
+
+        return res_props;
     }
 }

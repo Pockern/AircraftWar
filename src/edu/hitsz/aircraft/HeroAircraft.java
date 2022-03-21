@@ -18,18 +18,18 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 子弹一次发射数量
      */
-    private int shootNum = 1;
+    private final int shootNum = 1;
 
     /**
      * 子弹伤害
      */
-    private int power = 30;
+    private final int power = 30;
 
     /**
      * 子弹射击方向 (向上发射：1，向下发射：-1) （by teacher
      * 以代码为准，maybe向上是-1，向下为1
      */
-    private int bullet_direction = -1;
+    private final int bullet_direction = -1;
 
     /**
      * @param locationX 英雄机位置x坐标
@@ -68,4 +68,8 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
+    @Override
+    public List<AbstractProps> props_drop() {
+        return new LinkedList<>();
+    }
 }
