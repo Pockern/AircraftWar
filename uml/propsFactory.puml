@@ -1,48 +1,70 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-PropsFactory <|-- BloodFactory
-PropsFactory <|-- BombFactory
-PropsFactory <|-- BulletFactory
+Game ..> PropsFactory
+Game ..> AbstractProps
+
+PropsFactory ..> AbstractProps
+
+PropsFactory <|.. BloodFactory
+PropsFactory <|.. BombFactory
+PropsFactory <|.. BulletFactory
 
 AbstractProps <|-- BloodProps
 AbstractProps <|-- BombProps
 AbstractProps <|-- BulletProps
 
-BloodFactory <|-- BloodProps
-BombFactory <|-- BombProps
-BulletFactory <|-- BulletProps
+BloodFactory  ..> BloodProps
+BombFactory   ..> BombProps
+BulletFactory ..> BulletProps
+
+class Game {
+
+}
 
 interface PropsFactory {
-    createProps(): void
+    + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
 class BloodFactory {
-    createProps(): BloodProps
+    - props: List<AbstractProps>
+    + BloodFactory()
+    + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
 class BombFactory {
-    createProps(): BombProps
+    - props: List<AbstractProps>
+    + BombFactory()
+    + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
 class BulletFactory {
-    createProps(): BulletProps
+    - props: List<AbstractProps>
+    + BulletFactory()
+    + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
 abstract class AbstractProps {
 
+    + AbstractProps(int locationX, int locationY, int speedX, int speedY)
+    + forward(): void
 }
 
 class BloodProps {
+    -treatment: int
 
+    + HpProps(int locationX, int locationY, int speedX, int speedY)
+    + getTreatment(): int
 }
 
 class BombProps {
 
+    + BombProps(int locationX, int locationY, int speedX, int speedY)
 }
 
 class BulletProps {
 
+    + FireProps(int locationX, int locationY, int speedX, int speedY)
 }
 
 @enduml

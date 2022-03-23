@@ -1,58 +1,83 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-AircraftFactory <|-- HeroAircraftFactory
-AircraftFactory <|-- MobEnemyFactory
-AircraftFactory <|-- EliteEnemyFactory
-AircraftFactory <|-- BossEnemyFactory
+Game ..> AircraftFactory
+Game ..> AbstractAircraft
 
-AbstractAircraft <|-- HeroAicraft
+AircraftFactory ..> AbstractAircraft
+
+AircraftFactory <|.. MobEnemyFactory
+AircraftFactory <|.. EliteEnemyFactory
+AircraftFactory <|.. BossEnemyFactory
+
 AbstractAircraft <|-- MobEnemy
 AbstractAircraft <|-- EliteEnemy
 AbstractAircraft <|-- BossEnemy
 
-HeroAircraftFactory <|-- HeroAicraft
-MobEnemyFactory     <|-- MobEnemy
-EliteEnemyFactory   <|-- EliteEnemy
-BossEnemyFactory    <|-- BossEnemy
+MobEnemyFactory   ..> MobEnemy
+EliteEnemyFactory ..> EliteEnemy
+BossEnemyFactory  ..> BossEnemy
 
-interface AircraftFactory {
-    createAircraft(): void
+class Game {
+
 }
 
-class HeroAircraftFactory {
-    createAircraft(): HeroAicraft
+interface AircraftFactory {
+    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
 class MobEnemyFactory {
-    createAircraft(): MobEnemy
+    - aircraft: List<AbstractAircraft>
+    + MobEnemyFactory()
+    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
 class EliteEnemyFactory {
-    createAircraft(): EliteEnemy
+    - aircraft: List<AbstractAircraft>
+    + EliteEnemyFactory()
+    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
 class BossEnemyFactory {
-    createAircraft(): BossEnemy
+    - aircraft: List<AbstractAircraft>
+    + BossEnemy()
+    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
 abstract class AbstractAircraft {
+    # maxHp: int
+    # hp   : int
 
-}
-
-class HeroAicraft {
-
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + getHp(): int
+    + {abstract} shoot(): List<BaseBullet>
 }
 
 class MobEnemy {
 
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
 }
 
 class EliteEnemy {
+    - bullet_direction: int
+    - shootNum: int
+    - power: int
 
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
 }
 
 class BossEnemy {
 
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward(): void
+    + shoot(): List<BaseBullet>
+    + props_drop(): List<AbstractProps>
 }
+
 @enduml

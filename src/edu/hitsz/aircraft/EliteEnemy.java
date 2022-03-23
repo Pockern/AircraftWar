@@ -1,16 +1,9 @@
 package edu.hitsz.aircraft;
-
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
-import edu.hitsz.props.AbstractProps;
-import edu.hitsz.props.BloodProps;
-import edu.hitsz.props.BombProps;
-import edu.hitsz.props.BulletProps;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 精英敌机

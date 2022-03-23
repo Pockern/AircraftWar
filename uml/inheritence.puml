@@ -3,9 +3,10 @@
 
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractAircraft     <|-- HeroAircraft
-AbstractAircraft     <|-- MobEnemy
-AbstractAircraft     <|-- EliteEnemy
-AbstractAircraft     <|-- BossEnemy
+AbstractAircraft     <|-- EnemyAircraft
+EnemyAircraft        <|-- MobEnemy
+EnemyAircraft        <|-- EliteEnemy
+EnemyAircraft        <|-- BossEnemy
 
 AbstractFlyingObject <|-- BaseBullet
 BaseBullet           <|-- HeroBullet
@@ -52,14 +53,19 @@ abstract class AbstractAircraft {
     + {abstract} shoot(): List<BaseBullet>
 }
 
+class EnemyAircraft {
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + shoot(): List<BaseBullet>
+}
+
 class HeroAircraft {
     - shootNum: int
     - power: int
     - bullet_direction: int
-    - heroAircraft: HeroAircraft
+    - {static} heroAircraft: HeroAircraft
 
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-    + getHeroAircraft(): HeroAircraft
+    + {static} getHeroAircraft(): HeroAircraft
     + forward(): void
     + shoot(): List<BaseBullet>
 }
@@ -69,15 +75,16 @@ class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
-    + props_drop(): List<AbstractProps>
 }
 
 class EliteEnemy {
+    - bullet_direction: int
+    - shootNum: int
+    - power: int
 
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
-    + props_drop(): List<AbstractProps>
 }
 
 class BossEnemy {
@@ -124,7 +131,7 @@ class BombProps {
     + BombProps(int locationX, int locationY, int speedX, int speedY)
 }
 
-class FireProps {
+class BulletProps {
 
     + FireProps(int locationX, int locationY, int speedX, int speedY)
 }
