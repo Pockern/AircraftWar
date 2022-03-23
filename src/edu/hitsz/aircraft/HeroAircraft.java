@@ -1,8 +1,9 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
-import edu.hitsz.props.AbstractProps;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class HeroAircraft extends AbstractAircraft {
      */
     private final int bullet_direction = -1;
 
+    private volatile static HeroAircraft heroAircraft;
+
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -40,6 +43,25 @@ public class HeroAircraft extends AbstractAircraft {
      */
     public HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+    }
+
+    /**
+     *建立英雄机实例并返回
+     * 单例模式
+     */
+    public static HeroAircraft getHeroAircraft() {
+        if (heroAircraft == null) {
+            synchronized (HeroAircraft.class) {
+                if (heroAircraft == null) {
+                    heroAircraft = new HeroAircraft(
+                            Main.WINDOW_WIDTH / 2,
+                            Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
+                            0,0,100
+                    );
+                }
+            }
+        }
+        return heroAircraft;
     }
 
     @Override
@@ -68,8 +90,4 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
-    @Override
-    public List<AbstractProps> props_drop() {
-        return new LinkedList<>();
-    }
 }

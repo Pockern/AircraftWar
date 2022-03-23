@@ -53,30 +53,4 @@ public class EliteEnemy extends AbstractAircraft {
         return res_bullet;
     }
 
-    @Override
-    public List<AbstractProps> props_drop() {
-        List<AbstractProps> res_props = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY();
-        int speedX = 0;
-        int speedY = this.getSpeedY();
-        AbstractProps abstractProps;
-
-        //嘿嘿嘿，随机数来喽~，产生三种道具和无掉落为1 : 1 : 1 : 1
-        Random r = new Random();
-        int rd_props = r.nextInt(4);
-
-        if (rd_props == 0) {
-            abstractProps = new BloodProps(x, y, speedX, speedY);
-            res_props.add(abstractProps);
-        } else if (rd_props == 1) {
-            abstractProps = new BombProps(x, y, speedX, speedY);
-            res_props.add(abstractProps);
-        } else if(rd_props == 2) {
-            abstractProps = new BulletProps(x, y, speedX, speedY);
-            res_props.add(abstractProps);
-        }
-
-        return res_props;
-    }
 }

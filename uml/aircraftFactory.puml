@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+AircraftFactory <|-- HeroAircraftFactory
+AircraftFactory <|-- MobEnemyFactory
+AircraftFactory <|-- EliteEnemyFactory
+AircraftFactory <|-- BossEnemyFactory
+
+AbstractAircraft <|-- HeroAicraft
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- BossEnemy
+
+HeroAircraftFactory <|-- HeroAicraft
+MobEnemyFactory     <|-- MobEnemy
+EliteEnemyFactory   <|-- EliteEnemy
+BossEnemyFactory    <|-- BossEnemy
+
+interface AircraftFactory {
+    createAircraft(): void
+}
+
+class HeroAircraftFactory {
+    createAircraft(): HeroAicraft
+}
+
+class MobEnemyFactory {
+    createAircraft(): MobEnemy
+}
+
+class EliteEnemyFactory {
+    createAircraft(): EliteEnemy
+}
+
+class BossEnemyFactory {
+    createAircraft(): BossEnemy
+}
+
+abstract class AbstractAircraft {
+
+}
+
+class HeroAicraft {
+
+}
+
+class MobEnemy {
+
+}
+
+class EliteEnemy {
+
+}
+
+class BossEnemy {
+
+}
+@enduml

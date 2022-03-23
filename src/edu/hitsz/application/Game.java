@@ -1,12 +1,17 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraftfactory.EliteEnemyFactory;
+import edu.hitsz.aircraftfactory.MobEnemyFactory;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.props.AbstractProps;
 import edu.hitsz.props.BloodProps;
 import edu.hitsz.props.BombProps;
 import edu.hitsz.props.BulletProps;
+import edu.hitsz.propsfactory.BloodFactory;
+import edu.hitsz.propsfactory.BombFactory;
+import edu.hitsz.propsfactory.BulletFactory;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -55,10 +60,7 @@ public class Game extends JPanel {
 
 
     public Game() {
-        heroAircraft = new HeroAircraft(
-                Main.WINDOW_WIDTH / 2,
-                Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 100);
+        heroAircraft = HeroAircraft.getHeroAircraft();
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -101,16 +103,18 @@ public class Game extends JPanel {
                 // 新敌机产生
                 // 普通敌机 : 精英敌机 = 3 : 1
                 if (enemyAircrafts.size() < enemyMaxNumber && rd_enemy <= 2) {
-                    enemyAircrafts.add(new MobEnemy(
-                            (int) ( Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth()))*1,
-                            (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2)*1,
+                    MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
+                    enemyAircrafts.addAll( mobEnemyFactory.createAircraft (
+                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) *1,
+                            (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) *1,
                             0,
                             10,
                             30
                     ));
                 }
                 else if (enemyAircrafts.size() < enemyMaxNumber) {
-                    enemyAircrafts.add(new EliteEnemy(
+                    EliteEnemyFactory eliteEnemyFactory = new EliteEnemyFactory();
+                    enemyAircrafts.addAll( eliteEnemyFactory.createAircraft (
                             (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) *1,
                             (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) *1,
                             0,
@@ -244,13 +248,45 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     //子弹消失
                     bullet.vanish();
-                    //英雄机获得分数，并在敌机死亡处产生道具
-                    if (enemyAircraft.notValid()) {
+
+                    //英雄机获得分数，并在精英敌机死亡处产生道具
+                    if (enemyAircraft instanceof EliteEnemy && enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
                         score += 10;
 
-                        //只有精英机真正掉落道具
-                        enemyDrop.addAll(enemyAircraft.props_drop());
+                        //TODO
+                        //随机数确定产生道具的概率
+                        Random rd = new Random();
+                        int rd_props = rd.nextInt(4);
+
+                        if (rd_props == 0) {
+                            BloodFactory bloodFactory = new BloodFactory();
+                            enemyDrop.addAll(bloodFactory.createProps(
+                                    enemyAircraft.getLocationX(),
+                                    enemyAircraft.getLocationY(),
+                                    enemyAircraft.getSpeedX(),
+                                    enemyAircraft.getSpeedY()
+                            ));
+                        } else if (rd_props == 1) {
+                            BombFactory bombFactory = new BombFactory();
+                            enemyDrop.addAll(bombFactory.createProps(
+                                    enemyAircraft.getLocationX(),
+                                    enemyAircraft.getLocationY(),
+                                    enemyAircraft.getSpeedX(),
+                                    enemyAircraft.getSpeedY()
+                            ));
+                        } else if (rd_props == 2) {
+                            BulletFactory bulletFactory = new BulletFactory();
+                            enemyDrop.addAll(bulletFactory.createProps(
+                                    enemyAircraft.getLocationX(),
+                                    enemyAircraft.getLocationY(),
+                                    enemyAircraft.getSpeedX(),
+                                    enemyAircraft.getSpeedY()
+                            ));
+                        } else {
+                            //TODO
+                        }
+
                     }
                 }
 

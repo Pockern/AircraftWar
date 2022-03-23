@@ -33,8 +33,4 @@ public class MobEnemy extends AbstractAircraft {
         return new LinkedList<>();
     }
 
-    @Override
-    public List<AbstractProps> props_drop() {
-        return new LinkedList<>();
-    }
 }

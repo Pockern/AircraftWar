@@ -53,14 +53,6 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract List<BaseBullet> shoot();
 
-    /**
-     * 道具掉落方法，能掉落道具对象必须实现
-     * @return
-     *  能掉落道具对象需实现，返回道具
-     *  不能掉落道具对象空实现，返回null
-     */
-    public abstract List<AbstractProps> props_drop();
-
 }
 
 
