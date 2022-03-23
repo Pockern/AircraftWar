@@ -17,7 +17,7 @@ import java.util.Random;
  *
  * @author Pockern
  */
-public class EliteEnemy extends AbstractAircraft {
+public class EliteEnemy extends EnemyAircraft {
     //精英机子弹方向
     private int bullet_direction = 1;
     //一次射出的子弹量

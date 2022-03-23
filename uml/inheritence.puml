@@ -50,18 +50,18 @@ abstract class AbstractAircraft {
     + increaseHp(int increase): void
     + getHp(): int
     + {abstract} shoot(): List<BaseBullet>
-    + {abstract} props_drop(): List<AbstractProps>
 }
 
 class HeroAircraft {
     - shootNum: int
     - power: int
     - bullet_direction: int
+    - heroAircraft: HeroAircraft
 
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getHeroAircraft(): HeroAircraft
     + forward(): void
     + shoot(): List<BaseBullet>
-    + props_drop(): List<AbstractProps>
 }
 
 class MobEnemy {
