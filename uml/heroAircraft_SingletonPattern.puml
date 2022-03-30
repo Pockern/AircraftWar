@@ -6,15 +6,19 @@ class Game {
 }
 
 class HeroAircraft {
-    - shootNum: int
-    - power: int
-    - bullet_direction: int
-    - {static} heroAircraft: HeroAircraft
+    - shootNum : int
+    - power : int
+    - bullet_direction : int
+    - {static} heroAircraft : HeroAircraft
 
-    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + {static} getHeroAircraft(): HeroAircraft
     + forward(): void
     + shoot(): List<BaseBullet>
 }
+
+HeroAircraft::heroAircraft --> HeroAircraft
+
+Game -right-> HeroAircraft::getHeroAircraft
 
 @enduml

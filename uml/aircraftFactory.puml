@@ -4,15 +4,15 @@
 Game ..> AircraftFactory
 Game ..> AbstractAircraft
 
-AircraftFactory ..> AbstractAircraft
+AircraftFactory .left.> AbstractAircraft
 
-AircraftFactory <|.. MobEnemyFactory
-AircraftFactory <|.. EliteEnemyFactory
-AircraftFactory <|.. BossEnemyFactory
-
-AbstractAircraft <|-- MobEnemy
-AbstractAircraft <|-- EliteEnemy
-AbstractAircraft <|-- BossEnemy
+'AircraftFactory <|.. MobEnemyFactory
+'AircraftFactory <|.. EliteEnemyFactory
+'AircraftFactory <|.. BossEnemyFactory
+'
+'AbstractAircraft <|-- MobEnemy
+'AbstractAircraft <|-- EliteEnemy
+'AbstractAircraft <|-- BossEnemy
 
 MobEnemyFactory   ..> MobEnemy
 EliteEnemyFactory ..> EliteEnemy
@@ -26,19 +26,19 @@ interface AircraftFactory {
     + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
-class MobEnemyFactory {
+class MobEnemyFactory implements AircraftFactory {
     - aircraft: List<AbstractAircraft>
     + MobEnemyFactory()
     + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
-class EliteEnemyFactory {
+class EliteEnemyFactory implements AircraftFactory {
     - aircraft: List<AbstractAircraft>
     + EliteEnemyFactory()
     + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
 }
 
-class BossEnemyFactory {
+class BossEnemyFactory implements AircraftFactory {
     - aircraft: List<AbstractAircraft>
     + BossEnemy()
     + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
@@ -55,14 +55,14 @@ abstract class AbstractAircraft {
     + {abstract} shoot(): List<BaseBullet>
 }
 
-class MobEnemy {
+class MobEnemy extends AbstractAircraft {
 
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
 }
 
-class EliteEnemy {
+class EliteEnemy extends AbstractAircraft {
     - bullet_direction: int
     - shootNum: int
     - power: int
@@ -72,7 +72,7 @@ class EliteEnemy {
     + shoot(): List<BaseBullet>
 }
 
-class BossEnemy {
+class BossEnemy extends AbstractAircraft {
 
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void

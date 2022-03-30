@@ -4,15 +4,7 @@
 Game ..> PropsFactory
 Game ..> AbstractProps
 
-PropsFactory ..> AbstractProps
-
-PropsFactory <|.. BloodFactory
-PropsFactory <|.. BombFactory
-PropsFactory <|.. BulletFactory
-
-AbstractProps <|-- BloodProps
-AbstractProps <|-- BombProps
-AbstractProps <|-- BulletProps
+PropsFactory .left.> AbstractProps
 
 BloodFactory  ..> BloodProps
 BombFactory   ..> BombProps
@@ -26,19 +18,19 @@ interface PropsFactory {
     + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
-class BloodFactory {
+class BloodFactory implements PropsFactory {
     - props: List<AbstractProps>
     + BloodFactory()
     + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
-class BombFactory {
+class BombFactory implements PropsFactory {
     - props: List<AbstractProps>
     + BombFactory()
     + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
 }
 
-class BulletFactory {
+class BulletFactory implements PropsFactory {
     - props: List<AbstractProps>
     + BulletFactory()
     + createProps(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractProps>
@@ -50,19 +42,19 @@ abstract class AbstractProps {
     + forward(): void
 }
 
-class BloodProps {
+class BloodProps extends AbstractProps {
     -treatment: int
 
     + HpProps(int locationX, int locationY, int speedX, int speedY)
     + getTreatment(): int
 }
 
-class BombProps {
+class BombProps extends AbstractProps {
 
     + BombProps(int locationX, int locationY, int speedX, int speedY)
 }
 
-class BulletProps {
+class BulletProps extends AbstractProps {
 
     + FireProps(int locationX, int locationY, int speedX, int speedY)
 }
