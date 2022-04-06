@@ -11,10 +11,20 @@ import java.util.List;
  * @author Pockern
  */
 public class EliteEnemy extends EnemyAircraft {
+
+    /**
+     * 子弹方向，1为向下
+     */
     private int bulletDirection = 1;
-    //一次射出的子弹量
+
+    /**
+     * 子弹一次发射数量
+     */
     private int shootNum = 1;
-    //单发子弹伤害
+
+    /**
+     * 子弹伤害
+     */
     private int power = 20;
 
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {

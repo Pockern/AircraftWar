@@ -5,6 +5,7 @@ import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.aircraft.MobEnemy;
+import edu.hitsz.bullet.BossBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.props.BloodProps;
@@ -15,6 +16,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.rmi.server.RMIClassLoaderSpi;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +67,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(BossEnemy.class.getName(), BOSS_ENEMY_IMAGE);
             CLASSNAME_IMAGE_MAP.put(HeroBullet.class.getName(), HERO_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(BossBullet.class.getName(), ENEMY_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BloodProps.class.getName(), PROPS_BLOOD);
             CLASSNAME_IMAGE_MAP.put(BombProps.class.getName(), PROPS_BOMB);
             CLASSNAME_IMAGE_MAP.put(BulletProps.class.getName(), PROPS_FIRE);

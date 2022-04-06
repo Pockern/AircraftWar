@@ -40,15 +40,16 @@ public class Game extends JPanel {
      */
     private int timeInterval = 40;
 
-    private final HeroAircraft heroAircraft;
-    private final List<AbstractAircraft> enemyAircrafts;
-    private final List<BaseBullet> heroBullets;
-    private final List<BaseBullet> enemyBullets;
-    private final List<AbstractProps> enemyDrop;
+    private  HeroAircraft heroAircraft;
+    private  List<AbstractAircraft> enemyAircrafts;
+    private  List<BaseBullet> heroBullets;
+    private  List<BaseBullet> enemyBullets;
+    private  List<AbstractProps> enemyDrop;
 
     private int enemyMaxNumber = 5;
 
     private boolean gameOverFlag = false;
+    private boolean isBoss = false;
     private int score = 0;
     private int time = 0;
     /**
@@ -95,6 +96,12 @@ public class Game extends JPanel {
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
 
+               //TODO boss相关
+                if (score >= 20 && !isBoss) {
+                    isBoss = true;
+                    enemyAircrafts.add(BossEnemy.getBossEnemy());
+                }
+
                 //随机数产生，以产生战机概率和物品掉落概率
                 int rdEnemy = r.nextInt(4);
 
@@ -121,6 +128,7 @@ public class Game extends JPanel {
                             30
                     ));
                 }
+
                 // 飞机射出子弹
                 shootAction();
             }
@@ -250,10 +258,9 @@ public class Game extends JPanel {
 
                     //英雄机获得分数，并在精英敌机死亡处产生道具
                     if (enemyAircraft.notValid()) {
-                        // TODO 获得分数，产生道具补给
+                        //获得分数，产生道具补给
                         score += 20;
                         if(enemyAircraft instanceof EliteEnemy) {
-                            //TODO
                             //随机数确定产生道具的概率
                             Random rd = new Random();
                             int rdProps = rd.nextInt(4);
@@ -358,6 +365,7 @@ public class Game extends JPanel {
             this.backGroundTop = 0;
         }
 
+        //TODO boss机子弹绘制怎么说
         // 先绘制子弹，后绘制飞机
         // 这样子弹显示在飞机的下层
         paintImageWithPositionRevised(g, enemyBullets);
