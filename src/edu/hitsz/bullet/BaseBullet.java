@@ -11,7 +11,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
  */
 public class BaseBullet extends AbstractFlyingObject {
 
-    private int power = 10;
+    private int power;
 
     public BaseBullet(int locationX, int locationY, int speedX, int speedY, int power) {
         super(locationX, locationY, speedX, speedY);
@@ -28,7 +28,7 @@ public class BaseBullet extends AbstractFlyingObject {
         }
 
         // 判定 y 轴出界
-        if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT ) {
+        if (locationY >= Main.WINDOW_HEIGHT ) {
             // 向下飞行出界
             vanish();
         }else if (locationY <= 0){

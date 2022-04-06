@@ -14,6 +14,7 @@ public class BossEnemyFactory implements AircraftFactory {
 
     }
 
+    @Override
     public List<AbstractAircraft> createAircraft (int locationX, int locationY, int speedX, int speedY, int hp) {
         aircraft = new LinkedList<>();
         BossEnemy bossEnemy = new BossEnemy(locationX, locationY, speedX, speedY, hp);

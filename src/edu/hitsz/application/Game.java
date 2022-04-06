@@ -61,7 +61,6 @@ public class Game extends JPanel {
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
-
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
@@ -97,12 +96,12 @@ public class Game extends JPanel {
             if (timeCountAndNewCycleJudge()) {
 
                 //随机数产生，以产生战机概率和物品掉落概率
-                int rd_enemy = r.nextInt(4);
+                int rdEnemy = r.nextInt(4);
 
                 System.out.println(time);
                 // 新敌机产生
                 // 普通敌机 : 精英敌机 = 3 : 1
-                if (enemyAircrafts.size() < enemyMaxNumber && rd_enemy <= 2) {
+                if (enemyAircrafts.size() < enemyMaxNumber && rdEnemy <= 2) {
                     MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
                     enemyAircrafts.addAll( mobEnemyFactory.createAircraft (
                             (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) *1,
@@ -178,7 +177,7 @@ public class Game extends JPanel {
     }
 
     private void shootAction() {
-        // TODO 敌机射击
+        // 敌机射击
         for (AbstractAircraft enemy : enemyAircrafts) {
             enemyBullets.addAll(enemy.shoot());
         }
@@ -216,16 +215,16 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // TODO 敌机子弹攻击英雄
-        for (BaseBullet enemy_bullet : enemyBullets) {
+        for (BaseBullet enemyBullet : enemyBullets) {
             //子弹消失，则看下一战机的子弹是否命中
-            if (enemy_bullet.notValid()) {
+            if (enemyBullet.notValid()) {
                 continue;
             }
 
             //如果被敌机子弹命中，则降低英雄机血量，敌机子弹消失
-            if (heroAircraft.crash(enemy_bullet)) {
-                heroAircraft.decreaseHp(enemy_bullet.getPower());
-                enemy_bullet.vanish();
+            if (heroAircraft.crash(enemyBullet)) {
+                heroAircraft.decreaseHp(enemyBullet.getPower());
+                enemyBullet.vanish();
             }
         }
         // 英雄子弹攻击敌机
@@ -250,43 +249,43 @@ public class Game extends JPanel {
                     bullet.vanish();
 
                     //英雄机获得分数，并在精英敌机死亡处产生道具
-                    if (enemyAircraft instanceof EliteEnemy && enemyAircraft.notValid()) {
+                    if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        score += 10;
-
-                        //TODO
-                        //随机数确定产生道具的概率
-                        Random rd = new Random();
-                        int rd_props = rd.nextInt(4);
-
-                        if (rd_props == 0) {
-                            BloodFactory bloodFactory = new BloodFactory();
-                            enemyDrop.addAll(bloodFactory.createProps(
-                                    enemyAircraft.getLocationX(),
-                                    enemyAircraft.getLocationY(),
-                                    enemyAircraft.getSpeedX(),
-                                    enemyAircraft.getSpeedY()
-                            ));
-                        } else if (rd_props == 1) {
-                            BombFactory bombFactory = new BombFactory();
-                            enemyDrop.addAll(bombFactory.createProps(
-                                    enemyAircraft.getLocationX(),
-                                    enemyAircraft.getLocationY(),
-                                    enemyAircraft.getSpeedX(),
-                                    enemyAircraft.getSpeedY()
-                            ));
-                        } else if (rd_props == 2) {
-                            BulletFactory bulletFactory = new BulletFactory();
-                            enemyDrop.addAll(bulletFactory.createProps(
-                                    enemyAircraft.getLocationX(),
-                                    enemyAircraft.getLocationY(),
-                                    enemyAircraft.getSpeedX(),
-                                    enemyAircraft.getSpeedY()
-                            ));
-                        } else {
+                        score += 20;
+                        if(enemyAircraft instanceof EliteEnemy) {
                             //TODO
-                        }
+                            //随机数确定产生道具的概率
+                            Random rd = new Random();
+                            int rdProps = rd.nextInt(4);
 
+                            if (rdProps == 0) {
+                                BloodFactory bloodFactory = new BloodFactory();
+                                enemyDrop.addAll(bloodFactory.createProps(
+                                        enemyAircraft.getLocationX(),
+                                        enemyAircraft.getLocationY(),
+                                        enemyAircraft.getSpeedX(),
+                                        enemyAircraft.getSpeedY()
+                                ));
+                            } else if (rdProps == 1) {
+                                BombFactory bombFactory = new BombFactory();
+                                enemyDrop.addAll(bombFactory.createProps(
+                                        enemyAircraft.getLocationX(),
+                                        enemyAircraft.getLocationY(),
+                                        enemyAircraft.getSpeedX(),
+                                        enemyAircraft.getSpeedY()
+                                ));
+                            } else if (rdProps == 2) {
+                                BulletFactory bulletFactory = new BulletFactory();
+                                enemyDrop.addAll(bulletFactory.createProps(
+                                        enemyAircraft.getLocationX(),
+                                        enemyAircraft.getLocationY(),
+                                        enemyAircraft.getSpeedX(),
+                                        enemyAircraft.getSpeedY()
+                                ));
+                            } else {
+                                //TODO
+                            }
+                        }
                     }
                 }
 
@@ -299,22 +298,22 @@ public class Game extends JPanel {
         }
 
         // Todo: 我方获得道具，道具生效
-        for (AbstractProps props_drop : enemyDrop) {
+        for (AbstractProps propsDrop : enemyDrop) {
 
             //道具消失或生效，则遍历下一个道具
-            if (props_drop.notValid()) {
+            if (propsDrop.notValid()) {
                 continue;
             }
             //道具和英雄机相撞则发挥效用
-            if (heroAircraft.crash(props_drop) || props_drop.crash(heroAircraft)) {
-                if (props_drop instanceof BloodProps) {
-                    heroAircraft.increaseHP(((BloodProps) props_drop).getTreatment());
-                } else if (props_drop instanceof BombProps) {
+            if (heroAircraft.crash(propsDrop) || propsDrop.crash(heroAircraft)) {
+                if (propsDrop instanceof BloodProps) {
+                    heroAircraft.increaseHp(((BloodProps) propsDrop).getTreatment());
+                } else if (propsDrop instanceof BombProps) {
                     System.out.println("BombSupply active!");
-                } else if (props_drop instanceof BulletProps) {
+                } else if (propsDrop instanceof BulletProps) {
                     System.out.println("FireSupply active!");
                 }
-                props_drop.vanish();
+                propsDrop.vanish();
             }
 
         }

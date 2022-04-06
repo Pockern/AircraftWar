@@ -11,8 +11,7 @@ import java.util.List;
  * @author Pockern
  */
 public class EliteEnemy extends EnemyAircraft {
-    //精英机子弹方向
-    private int bullet_direction = 1;
+    private int bulletDirection = 1;
     //一次射出的子弹量
     private int shootNum = 1;
     //单发子弹伤害
@@ -33,17 +32,17 @@ public class EliteEnemy extends EnemyAircraft {
 
     @Override
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res_bullet = new LinkedList<>();
+        List<BaseBullet> resBullet = new LinkedList<>();
         int x = this.getLocationX();
-        int y = this.getLocationY() + bullet_direction *2;
+        int y = this.getLocationY() + bulletDirection *2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + bullet_direction *4;
+        int speedY = this.getSpeedY() + bulletDirection *4;
         BaseBullet baseBullet;
         for(int i = 0; i < shootNum; i++) {
             baseBullet = new EnemyBullet(x, y, speedX, speedY, power);
-            res_bullet.add(baseBullet);
+            resBullet.add(baseBullet);
         }
-        return res_bullet;
+        return resBullet;
     }
 
 }

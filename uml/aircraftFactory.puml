@@ -6,14 +6,6 @@ Game ..> AbstractAircraft
 
 AircraftFactory .left.> AbstractAircraft
 
-'AircraftFactory <|.. MobEnemyFactory
-'AircraftFactory <|.. EliteEnemyFactory
-'AircraftFactory <|.. BossEnemyFactory
-'
-'AbstractAircraft <|-- MobEnemy
-'AbstractAircraft <|-- EliteEnemy
-'AbstractAircraft <|-- BossEnemy
-
 MobEnemyFactory   ..> MobEnemy
 EliteEnemyFactory ..> EliteEnemy
 BossEnemyFactory  ..> BossEnemy
@@ -77,7 +69,6 @@ class BossEnemy extends AbstractAircraft {
     + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward(): void
     + shoot(): List<BaseBullet>
-    + props_drop(): List<AbstractProps>
 }
 
 @enduml

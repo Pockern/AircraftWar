@@ -56,7 +56,9 @@ public class HeroAircraft extends AbstractAircraft {
                     heroAircraft = new HeroAircraft(
                             Main.WINDOW_WIDTH / 2,
                             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                            0,0,100
+                            0,
+                            0,
+                            100
                     );
                 }
             }
