@@ -1,6 +1,8 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
+import edu.hitsz.aircraftfactory.AircraftFactory;
+import edu.hitsz.aircraftfactory.BossEnemyFactory;
 import edu.hitsz.aircraftfactory.EliteEnemyFactory;
 import edu.hitsz.aircraftfactory.MobEnemyFactory;
 import edu.hitsz.bullet.BaseBullet;
@@ -40,11 +42,12 @@ public class Game extends JPanel {
      */
     private int timeInterval = 40;
 
-    private  HeroAircraft heroAircraft;
-    private  List<AbstractAircraft> enemyAircrafts;
-    private  List<BaseBullet> heroBullets;
-    private  List<BaseBullet> enemyBullets;
-    private  List<AbstractProps> enemyDrop;
+    private HeroAircraft heroAircraft;
+    private List<EnemyAircraft> enemyAircrafts;
+    private List<BaseBullet> heroBullets;
+    private List<BaseBullet> enemyBullets;
+    private List<AbstractProps> enemyDrop;
+    private AircraftFactory aircraftFactory;
 
     private int enemyMaxNumber = 5;
 
@@ -96,11 +99,13 @@ public class Game extends JPanel {
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
 
-               //TODO boss相关
-                if (score >= 20 && !isBoss) {
-                    isBoss = true;
-                    enemyAircrafts.add(BossEnemy.getBossEnemy());
-                }
+                //TODO 反复生成Boss机
+                //得分超过阈值，则生成Boss机(Boss机尚未存在)
+//                if (score >= 20 && !isBoss) {
+//                    isBoss = true;
+//                    aircraftFactory = new BossEnemyFactory();
+//                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
+//                }
 
                 //随机数产生，以产生战机概率和物品掉落概率
                 int rdEnemy = r.nextInt(4);
@@ -109,24 +114,12 @@ public class Game extends JPanel {
                 // 新敌机产生
                 // 普通敌机 : 精英敌机 = 3 : 1
                 if (enemyAircrafts.size() < enemyMaxNumber && rdEnemy <= 2) {
-                    MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
-                    enemyAircrafts.addAll( mobEnemyFactory.createAircraft (
-                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())) *1,
-                            (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) *1,
-                            0,
-                            10,
-                            30
-                    ));
+                    aircraftFactory = new MobEnemyFactory();
+                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
                 }
                 else if (enemyAircrafts.size() < enemyMaxNumber) {
-                    EliteEnemyFactory eliteEnemyFactory = new EliteEnemyFactory();
-                    enemyAircrafts.addAll( eliteEnemyFactory.createAircraft (
-                            (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())) *1,
-                            (int) (Math.random() * Main.WINDOW_HEIGHT * 0.2) *1,
-                            0,
-                            10,
-                            30
-                    ));
+                    aircraftFactory = new EliteEnemyFactory();
+                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
                 }
 
                 // 飞机射出子弹
@@ -222,7 +215,6 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // TODO 敌机子弹攻击英雄
         for (BaseBullet enemyBullet : enemyBullets) {
             //子弹消失，则看下一战机的子弹是否命中
             if (enemyBullet.notValid()) {
@@ -240,7 +232,7 @@ public class Game extends JPanel {
             if (bullet.notValid()) {
                 continue;
             }
-            for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+            for (EnemyAircraft enemyAircraft : enemyAircrafts) {
 
                 // 已被其他子弹击毁的敌机，不再检测
                 // 避免多个子弹重复击毁同一敌机的判定
@@ -260,39 +252,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         //获得分数，产生道具补给
                         score += 20;
-                        if(enemyAircraft instanceof EliteEnemy) {
-                            //随机数确定产生道具的概率
-                            Random rd = new Random();
-                            int rdProps = rd.nextInt(4);
-
-                            if (rdProps == 0) {
-                                BloodFactory bloodFactory = new BloodFactory();
-                                enemyDrop.addAll(bloodFactory.createProps(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        enemyAircraft.getSpeedX(),
-                                        enemyAircraft.getSpeedY()
-                                ));
-                            } else if (rdProps == 1) {
-                                BombFactory bombFactory = new BombFactory();
-                                enemyDrop.addAll(bombFactory.createProps(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        enemyAircraft.getSpeedX(),
-                                        enemyAircraft.getSpeedY()
-                                ));
-                            } else if (rdProps == 2) {
-                                BulletFactory bulletFactory = new BulletFactory();
-                                enemyDrop.addAll(bulletFactory.createProps(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        enemyAircraft.getSpeedX(),
-                                        enemyAircraft.getSpeedY()
-                                ));
-                            } else {
-                                //TODO
-                            }
-                        }
+                        enemyDrop.addAll( enemyAircraft.dropProps() );
                     }
                 }
 
@@ -304,7 +264,7 @@ public class Game extends JPanel {
             }
         }
 
-        // Todo: 我方获得道具，道具生效
+        // 我方获得道具，道具生效
         for (AbstractProps propsDrop : enemyDrop) {
 
             //道具消失或生效，则遍历下一个道具
@@ -313,13 +273,7 @@ public class Game extends JPanel {
             }
             //道具和英雄机相撞则发挥效用
             if (heroAircraft.crash(propsDrop) || propsDrop.crash(heroAircraft)) {
-                if (propsDrop instanceof BloodProps) {
-                    heroAircraft.increaseHp(((BloodProps) propsDrop).getTreatment());
-                } else if (propsDrop instanceof BombProps) {
-                    System.out.println("BombSupply active!");
-                } else if (propsDrop instanceof BulletProps) {
-                    System.out.println("FireSupply active!");
-                }
+                propsDrop.useProps(heroAircraft);
                 propsDrop.vanish();
             }
 

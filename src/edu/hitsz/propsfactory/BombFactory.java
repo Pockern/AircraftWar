@@ -6,7 +6,7 @@ import edu.hitsz.props.BombProps;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BombFactory implements PropsFactory {
+public class BombFactory extends PropsFactory {
 
     private List<AbstractProps> props;
 
@@ -15,9 +15,9 @@ public class BombFactory implements PropsFactory {
     }
 
     @Override
-    public List<AbstractProps> createProps (int locationX, int locationY, int speedX, int speedY) {
+    public List<AbstractProps> createProps (int locationX, int locationY) {
         props = new LinkedList<>();
-        BombProps bomb = new BombProps(locationX, locationY, speedX, speedY);
+        BombProps bomb = new BombProps(locationX, locationY);
         props.add(bomb);
         return props;
     }

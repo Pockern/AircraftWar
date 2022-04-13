@@ -1,14 +1,17 @@
 package edu.hitsz.props;
 
+import edu.hitsz.aircraft.AbstractAircraft;
+
 public class BloodProps extends AbstractProps {
 
     private final int treatment = 40;
 
-    public BloodProps(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
+    public BloodProps(int locationX, int locationY) {
+        super(locationX, locationY);
     }
 
-    public int getTreatment() {
-        return treatment;
+    @Override
+    public void useProps(AbstractAircraft abstractAircraft) {
+        abstractAircraft.increaseHp(treatment);
     }
 }

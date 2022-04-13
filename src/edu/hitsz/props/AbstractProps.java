@@ -1,13 +1,28 @@
 package edu.hitsz.props;
 
+import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 
+/**
+ * @author Pockern
+ */
 abstract public class AbstractProps extends AbstractFlyingObject {
 
-    public AbstractProps(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
+    /**
+     * 道具的速度
+     */
+   protected int propsSpeedX = 0;
+   protected int propsSpeedY = 10;
+
+    public AbstractProps(int locationX, int locationY) {
+        this.locationX = locationX;
+        this.locationY = locationY;
+        this.speedX = propsSpeedX;
+        this.speedY = propsSpeedY;
     }
+
+    public abstract void useProps(AbstractAircraft abstractAircraft);
 
     @Override
     public void forward() {
@@ -21,4 +36,5 @@ abstract public class AbstractProps extends AbstractFlyingObject {
             vanish();
         }
     }
+
 }

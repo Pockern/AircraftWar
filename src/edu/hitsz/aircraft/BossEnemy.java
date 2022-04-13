@@ -6,6 +6,7 @@ import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.BossBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.props.AbstractProps;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +17,6 @@ import java.util.List;
  * @author Pockern
  */
 public class BossEnemy extends EnemyAircraft {
-
-    private volatile static BossEnemy bossEnemy;
 
     /**
      * 子弹射击方向 (向上发射：1，向下发射：-1) （by teacher
@@ -42,27 +41,14 @@ public class BossEnemy extends EnemyAircraft {
     }
 
     /**
-     *建立Boss机实例并返回
-     * 单例模式
+     *boss机道具掉落
      */
-    public static BossEnemy getBossEnemy() {
-        if (bossEnemy == null) {
-            synchronized (HeroAircraft.class) {
-                if (bossEnemy == null) {
-                    bossEnemy = new BossEnemy(
-                            Main.WINDOW_WIDTH / 2,
-                            ImageManager.HERO_IMAGE.getHeight(),
-                            2,
-                            0,
-                            180
-                    );
-                }
-            }
-        }
-        return bossEnemy;
+    @Override
+    public List<AbstractProps> dropProps() {
+        List<AbstractProps> props = new LinkedList<>();
+        return props;
     }
 
-    //TODO
     /**
      *boss机射击
      */

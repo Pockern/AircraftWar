@@ -29,9 +29,7 @@ class HeroAircraftTest {
         //在英雄机位置制造加血道具
         bloodProps = new BloodProps(
                 heroAircraft.getLocationX(),
-                heroAircraft.getLocationY(),
-                0,
-                0
+                heroAircraft.getLocationY()
         );
 
         //创建敌机子弹实例
@@ -62,7 +60,7 @@ class HeroAircraftTest {
     void increaseHp() {
         //100血降20再加40，血量应该不超过100，考虑了边界条件
         heroAircraft.decreaseHp( enemyBullet.getPower() );
-        heroAircraft.increaseHp( bloodProps.getTreatment() );
+        bloodProps.useProps(heroAircraft);
         assertEquals(100, heroAircraft.getHp() );
     }
 

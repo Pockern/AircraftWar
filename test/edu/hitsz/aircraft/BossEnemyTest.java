@@ -1,5 +1,7 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +19,13 @@ class BossEnemyTest {
 
     @BeforeEach
     void setUp() {
-        bossEnemy = BossEnemy.getBossEnemy();
+        bossEnemy = new BossEnemy(
+                Main.WINDOW_WIDTH / 2,
+                ImageManager.HERO_IMAGE.getHeight(),
+                0,
+                0,
+                30
+        );
         bossBulletList = new LinkedList<>();
     }
 
@@ -33,10 +41,5 @@ class BossEnemyTest {
         assertNotNull(bossBulletList);
         //子弹列数量是否符合预期
         assertEquals(3, bossBulletList.size());
-    }
-
-    @Test
-    void getBossEnemy() {
-        assertNotNull(bossEnemy);
     }
 }

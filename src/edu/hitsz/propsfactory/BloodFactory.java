@@ -6,7 +6,7 @@ import edu.hitsz.props.BloodProps;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BloodFactory implements PropsFactory {
+public class BloodFactory extends PropsFactory {
 
     private List<AbstractProps> props;
 
@@ -15,9 +15,9 @@ public class BloodFactory implements PropsFactory {
     }
 
     @Override
-    public List<AbstractProps> createProps (int locationX, int locationY, int speedX, int speedY) {
+    public List<AbstractProps> createProps (int locationX, int locationY) {
         props = new LinkedList<>();
-        BloodProps bloodProps = new BloodProps(locationX, locationY, speedX, speedY);
+        BloodProps bloodProps = new BloodProps(locationX, locationY);
         props.add(bloodProps);
         return props;
     }

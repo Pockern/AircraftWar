@@ -6,7 +6,7 @@ import edu.hitsz.props.BulletProps;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BulletFactory {
+public class BulletFactory extends PropsFactory {
 
     private List<AbstractProps> props;
 
@@ -14,9 +14,10 @@ public class BulletFactory {
 
     }
 
-    public List<AbstractProps> createProps (int locationX, int locationY, int speedX, int speedY) {
+    @Override
+    public List<AbstractProps> createProps (int locationX, int locationY) {
         props = new LinkedList<>();
-        BulletProps bullet = new BulletProps(locationX, locationY, speedX, speedY);
+        BulletProps bullet = new BulletProps(locationX, locationY);
         props.add(bullet);
         return props;
     }
