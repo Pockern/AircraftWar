@@ -60,7 +60,7 @@ class HeroAircraftTest {
     void increaseHp() {
         //100血降20再加40，血量应该不超过100，考虑了边界条件
         heroAircraft.decreaseHp( enemyBullet.getPower() );
-        bloodProps.useProps(heroAircraft);
+        bloodProps.useProps(new LinkedList<>());
         assertEquals(100, heroAircraft.getHp() );
     }
 

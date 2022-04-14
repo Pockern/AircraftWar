@@ -3,6 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.props.AbstractProps;
+import edu.hitsz.shootstrategy.ShootStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,8 +18,8 @@ public class MobEnemy extends EnemyAircraft {
 
     private List<AbstractProps> props;
 
-    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+    public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy) {
+        super(locationX, locationY, speedX, speedY, hp, shootNum, power, shootDirection, shootStrategy);
     }
 
     @Override
@@ -28,11 +29,6 @@ public class MobEnemy extends EnemyAircraft {
         if (locationY >= Main.WINDOW_HEIGHT ) {
             vanish();
         }
-    }
-
-    @Override
-    public List<BaseBullet> shoot() {
-        return new LinkedList<>();
     }
 
     @Override

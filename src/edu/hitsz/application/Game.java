@@ -54,6 +54,7 @@ public class Game extends JPanel {
     private boolean gameOverFlag = false;
     private boolean isBoss = false;
     private int score = 0;
+    private int scoreLimit = 1;
     private int time = 0;
     /**
      * 周期（ms)
@@ -99,13 +100,23 @@ public class Game extends JPanel {
             // 周期性执行（控制频率）
             if (timeCountAndNewCycleJudge()) {
 
-                //TODO 反复生成Boss机
+                //判断当前敌机中是否仍有Boss机存活
+                for(AbstractAircraft abstractAircraft : enemyAircrafts) {
+                    if(abstractAircraft instanceof BossEnemy) {
+                        isBoss = true;
+                    } else {
+                        isBoss = false;
+                    }
+                }
+
                 //得分超过阈值，则生成Boss机(Boss机尚未存在)
-//                if (score >= 20 && !isBoss) {
-//                    isBoss = true;
-//                    aircraftFactory = new BossEnemyFactory();
-//                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
-//                }
+                //分数为300倍数时，若无Boss机，生成Boss
+                if (score >= 300  * scoreLimit && !isBoss) {
+                    isBoss = true;
+                    aircraftFactory = new BossEnemyFactory();
+                    enemyAircrafts.add( aircraftFactory.createAircraft() );
+                    scoreLimit += 1;
+                }
 
                 //随机数产生，以产生战机概率和物品掉落概率
                 int rdEnemy = r.nextInt(4);
@@ -115,11 +126,11 @@ public class Game extends JPanel {
                 // 普通敌机 : 精英敌机 = 3 : 1
                 if (enemyAircrafts.size() < enemyMaxNumber && rdEnemy <= 2) {
                     aircraftFactory = new MobEnemyFactory();
-                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
+                    enemyAircrafts.add( aircraftFactory.createAircraft() );
                 }
                 else if (enemyAircrafts.size() < enemyMaxNumber) {
                     aircraftFactory = new EliteEnemyFactory();
-                    enemyAircrafts.addAll( aircraftFactory.createAircraft() );
+                    enemyAircrafts.add( aircraftFactory.createAircraft() );
                 }
 
                 // 飞机射出子弹
@@ -273,7 +284,7 @@ public class Game extends JPanel {
             }
             //道具和英雄机相撞则发挥效用
             if (heroAircraft.crash(propsDrop) || propsDrop.crash(heroAircraft)) {
-                propsDrop.useProps(heroAircraft);
+                propsDrop.useProps(enemyAircrafts);
                 propsDrop.vanish();
             }
 

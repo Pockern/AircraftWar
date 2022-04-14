@@ -9,5 +9,5 @@ import java.util.List;
  * @author Pockern
  */
 public abstract class AircraftFactory {
-    public abstract List<EnemyAircraft> createAircraft ();
+    public abstract EnemyAircraft createAircraft ();
 }

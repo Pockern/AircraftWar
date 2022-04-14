@@ -8,6 +8,7 @@ import edu.hitsz.propsfactory.BloodFactory;
 import edu.hitsz.propsfactory.BombFactory;
 import edu.hitsz.propsfactory.BulletFactory;
 import edu.hitsz.propsfactory.PropsFactory;
+import edu.hitsz.shootstrategy.ShootStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,26 +21,11 @@ import java.util.Random;
  */
 public class EliteEnemy extends EnemyAircraft {
 
-    /**
-     * 子弹方向，1为向下
-     */
-    private int bulletDirection = 1;
-
-    /**
-     * 子弹一次发射数量
-     */
-    private int shootNum = 1;
-
-    /**
-     * 子弹伤害
-     */
-    private int power = 20;
-
-    /**
-     * 道具移动速度
-     */
-    private int propsSpeedX = 0;
-    private int propsSpeedY = this.getSpeedY();
+//    /**
+//     * 道具移动速度
+//     */
+//    private int propsSpeedX = 0;
+//    private int propsSpeedY = this.getSpeedY();
 
     /**
      * 道具工厂基类型，以便生成道具
@@ -51,8 +37,8 @@ public class EliteEnemy extends EnemyAircraft {
      */
     private List<AbstractProps> propsList = new LinkedList<>();
 
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy) {
+        super(locationX, locationY, speedX, speedY, hp, shootNum, power, shootDirection, shootStrategy);
     }
 
     @Override
@@ -93,21 +79,6 @@ public class EliteEnemy extends EnemyAircraft {
         }
 
         return propsList;
-    }
-
-    @Override
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> resBullet = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + bulletDirection *2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + bulletDirection *4;
-        BaseBullet baseBullet;
-        for(int i = 0; i < shootNum; i++) {
-            baseBullet = new EnemyBullet(x, y, speedX, speedY, power);
-            resBullet.add(baseBullet);
-        }
-        return resBullet;
     }
 
 }

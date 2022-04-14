@@ -1,8 +1,11 @@
 package edu.hitsz.props;
 
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
+
+import java.util.List;
 
 /**
  * @author Pockern
@@ -22,7 +25,7 @@ abstract public class AbstractProps extends AbstractFlyingObject {
         this.speedY = propsSpeedY;
     }
 
-    public abstract void useProps(AbstractAircraft abstractAircraft);
+    public abstract void useProps(List<EnemyAircraft> aircraftList);
 
     @Override
     public void forward() {

@@ -7,6 +7,7 @@ import edu.hitsz.bullet.BossBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.props.AbstractProps;
+import edu.hitsz.shootstrategy.ShootStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,26 +19,8 @@ import java.util.List;
  */
 public class BossEnemy extends EnemyAircraft {
 
-    /**
-     * 子弹射击方向 (向上发射：1，向下发射：-1) （by teacher
-     * 以代码为准，maybe向上是-1，向下为1
-     */
-    private final int bulletDirection = 1;
-
-    /**
-     * 子弹伤害
-     */
-    private final int power = 40;
-
-    /**攻击方式 */
-
-    /**
-     * 子弹一次发射数量
-     */
-    private final int shootNum = 3;
-
-    public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
-        super(locationX, locationY, speedX, speedY, hp);
+    public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy) {
+        super(locationX, locationY, speedX, speedY, hp, shootNum, power, shootDirection, shootStrategy);
     }
 
     /**
@@ -48,33 +31,6 @@ public class BossEnemy extends EnemyAircraft {
         List<AbstractProps> props = new LinkedList<>();
         return props;
     }
-
-    /**
-     *boss机射击
-     */
-    @Override
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        BossBullet bossBullet;
-        int x = this.getLocationX();
-        int y = this.getLocationY();
-        int speedY = bulletDirection * 10;
-
-        for(int i = 0; i < shootNum; i++ ) {
-            if(i == 0) {
-                bossBullet = new BossBullet(locationX, locationY, -15, speedY, power);
-                res.add(bossBullet);
-            } else if (i == 1) {
-                bossBullet = new BossBullet(locationX, locationY, 0, speedY, power);
-                res.add(bossBullet);
-            } else {
-                bossBullet = new BossBullet(locationX, locationY, 15, speedY, power);
-                res.add(bossBullet);
-            }
-        }
-        return res;
-    }
-
 
     @Override
     public void forward() {
