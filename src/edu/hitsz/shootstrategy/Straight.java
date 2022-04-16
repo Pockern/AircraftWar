@@ -3,7 +3,6 @@ package edu.hitsz.shootstrategy;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
@@ -11,7 +10,7 @@ import edu.hitsz.bullet.HeroBullet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Direct implements ShootStrategy {
+public class Straight implements ShootStrategy {
 
     private int locationX;
     private int locationY;

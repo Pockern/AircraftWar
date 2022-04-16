@@ -7,6 +7,9 @@ import edu.hitsz.aircraftfactory.EliteEnemyFactory;
 import edu.hitsz.aircraftfactory.MobEnemyFactory;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.dao.ScoreDao;
+import edu.hitsz.dao.ScoreDaoImpl;
+import edu.hitsz.dao.ScoreRecord;
 import edu.hitsz.props.AbstractProps;
 import edu.hitsz.props.BloodProps;
 import edu.hitsz.props.BombProps;
@@ -19,6 +22,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -160,6 +164,26 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
+
+                System.out.println("****************************************************");
+                System.out.println("                    得分排行榜                        ");
+                System.out.println("****************************************************");
+
+                ScoreDao scoreDao = new ScoreDaoImpl();
+                //按想要的格式获取当前时间输出
+                Date date = new Date();
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String dateNow = ft.format(date);
+                //添加本次得分记录
+                ScoreRecord scoreRecord = new ScoreRecord("testUserName", score, dateNow);
+                scoreDao.doAdd(scoreRecord);
+
+                List<ScoreRecord> scoreRecordList = scoreDao.getAllScoreRecord();
+                for(int i = 0; i < scoreRecordList.size(); i++) {
+                    int j = i+1;
+                    System.out.println("第"+ j + "名： " + scoreRecordList.get(i));
+                }
+
                 System.out.println("Game Over!");
             }
 

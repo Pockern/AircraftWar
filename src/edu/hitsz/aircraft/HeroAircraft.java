@@ -2,13 +2,8 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet;
-import edu.hitsz.shootstrategy.Direct;
+import edu.hitsz.shootstrategy.Straight;
 import edu.hitsz.shootstrategy.ShootStrategy;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 英雄飞机，游戏玩家操控
@@ -51,7 +46,7 @@ public class HeroAircraft extends AbstractAircraft {
                             1,
                             30,
                             -1,
-                            new Direct()
+                            new Straight()
                     );
                 }
             }

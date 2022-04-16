@@ -1,15 +1,10 @@
 package edu.hitsz.aircraftfactory;
 
-import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.shootstrategy.Direct;
 import edu.hitsz.shootstrategy.ShootStrategy;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class MobEnemyFactory extends AircraftFactory{
 

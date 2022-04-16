@@ -1,15 +1,12 @@
 package edu.hitsz.aircraftfactory;
 
-import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.shootstrategy.Direct;
+import edu.hitsz.shootstrategy.Straight;
 import edu.hitsz.shootstrategy.ShootStrategy;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class EliteEnemyFactory extends AircraftFactory {
@@ -28,7 +25,7 @@ public class EliteEnemyFactory extends AircraftFactory {
         int shootNum = 1;
         int power = 20;
         int shootDirection = 1;
-        ShootStrategy shootStrategy = new Direct();
+        ShootStrategy shootStrategy = new Straight();
         EnemyAircraft aircraft;
 
         Random random = new Random();
