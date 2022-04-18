@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Game --> AbstractAircraft
+Game ..> Scattering
+Game ..> Straight
+AbstractAircraft o-down-> ShootStrategy
+Scattering .up.|> ShootStrategy
+Straight .up.|> ShootStrategy
+
+class Game {
+
+}
+
+class AbstractAircraft {
+    # maxHp: int
+    # hp   : int
+    # shootNum: int
+    # power: int
+    # shootDirection: int
+    # shootStrategy: ShootStrategy
+
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy)
+    + setShootStrategy(ShootStrategy shootStrategy): void
+    + shoot(): List<BaseBullet>
+    + decreaseHp(int decrease): void
+    + increaseHp(int increase): void
+    + setHp(int hp): void
+    + setShootNum(int shootNum): void
+    + setShootDirection(int shootDirection): void
+    + setPower(int power): void
+    + getHp(): int
+    + getShootNum(): int
+    + getShootDirection(): int
+    + getPower(): int
+}
+
+interface ShootStrategy {
+
+    + createBullet(AbstractAircraft aircraft): List<BaseBullet>
+}
+
+class Straight {
+    - baseBullet: BaseBullet
+    - bulletList: List<BaseBullet>
+
+    + createBullet(AbstractAircraft aircraft): List<BaseBullet>
+}
+
+class Scattering {
+    - baseBullet: BaseBullet
+    - bulletList: List<BaseBullet>
+
+    + createBullet(AbstractAircraft aircraft): List<BaseBullet>
+}
+
+@enduml

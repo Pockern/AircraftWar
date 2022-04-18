@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class MobEnemy extends EnemyAircraft {
 
-    private List<AbstractProps> props;
-
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy) {
         super(locationX, locationY, speedX, speedY, hp, shootNum, power, shootDirection, shootStrategy);
     }

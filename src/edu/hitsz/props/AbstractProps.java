@@ -25,7 +25,7 @@ abstract public class AbstractProps extends AbstractFlyingObject {
         this.speedY = propsSpeedY;
     }
 
-    public abstract void useProps(List<EnemyAircraft> aircraftList);
+    public abstract void useProps();
 
     @Override
     public void forward() {

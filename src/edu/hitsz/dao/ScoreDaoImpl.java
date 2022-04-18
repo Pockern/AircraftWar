@@ -19,6 +19,7 @@ public class ScoreDaoImpl implements ScoreDao{
     public ScoreDaoImpl() {
         scoreRecords = new LinkedList<>();
 
+        //文件非空则读取
         try {
             if(file.length() > 0) {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("database\\ScoreList.txt"));

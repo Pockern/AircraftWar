@@ -12,13 +12,6 @@ import java.util.List;
 
 public class Scattering implements ShootStrategy {
 
-    private int bulletDirection;
-    private int shootNum;
-    private int power;
-    private int locationX;
-    private int locationY;
-    private int speedX;
-    private int speedY;
     private BaseBullet baseBullet;
     private List<BaseBullet> bulletList = new LinkedList<>();
 
@@ -26,11 +19,11 @@ public class Scattering implements ShootStrategy {
     public List<BaseBullet> createBullet(AbstractAircraft aircraft) {
 
         if(aircraft instanceof BossEnemy) {
-            locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
-            locationY = aircraft.getLocationY();
-            speedX = 10;
-            speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*5;
-            power = aircraft.getPower();
+            int locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
+            int locationY = aircraft.getLocationY();
+            int speedX = 10;
+            int speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*5;
+            int power = aircraft.getPower();
 
             for(int i = 0; i < aircraft.getShootNum(); i++ ) {
                 if(i == 0) {
@@ -45,11 +38,11 @@ public class Scattering implements ShootStrategy {
                 }
             }
         } else if (aircraft instanceof HeroAircraft) {
-            locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
-            locationY = aircraft.getLocationY();
-            speedX = 5;
-            speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*5;
-            power = aircraft.getPower();
+            int locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
+            int locationY = aircraft.getLocationY();
+            int speedX = 5;
+            int speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*5;
+            int power = aircraft.getPower();
             aircraft.setShootNum(3);
 
             for(int i = 0; i < aircraft.getShootNum(); i++) {

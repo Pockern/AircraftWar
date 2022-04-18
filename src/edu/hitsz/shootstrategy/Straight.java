@@ -12,13 +12,6 @@ import java.util.List;
 
 public class Straight implements ShootStrategy {
 
-    private int locationX;
-    private int locationY;
-    private int speedX;
-    private int speedY;
-    private int shootDirection;
-    private int shootNum;
-    private int power;
     private BaseBullet baseBullet;
     private List<BaseBullet> bulletList = new LinkedList<>();
 
@@ -26,25 +19,25 @@ public class Straight implements ShootStrategy {
     public List<BaseBullet> createBullet(AbstractAircraft aircraft) {
 
         if(aircraft instanceof HeroAircraft) {
-            locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
-            locationY = aircraft.getLocationY();
+            int locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
+            int locationY = aircraft.getLocationY();
             //speedX = 0, speedY = shootDirection * 4
-            speedX = aircraft.getSpeedX();
-            speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*4;
-            power = aircraft.getPower();
-            shootNum = aircraft.getShootNum();
+            int speedX = aircraft.getSpeedX();
+            int speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*4;
+            int power = aircraft.getPower();
+            int shootNum = aircraft.getShootNum();
 
             for(int i = 0; i < shootNum; i++) {
                 baseBullet = new HeroBullet(locationX, locationY, speedX, speedY, power);
                 bulletList.add(baseBullet);
             }
         } else if (aircraft instanceof EliteEnemy) {
-            locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
-            locationY = aircraft.getLocationY();
-            speedX = 0;
-            speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*4;
-            shootNum = aircraft.getShootNum();
-            power = aircraft.getPower();
+            int locationX = aircraft.getLocationX() + aircraft.getShootDirection()*2;
+            int locationY = aircraft.getLocationY();
+            int speedX = 0;
+            int speedY = aircraft.getSpeedY() + aircraft.getShootDirection()*4;
+            int shootNum = aircraft.getShootNum();
+            int power = aircraft.getPower();
 
             for(int i = 0; i < shootNum; i++) {
                 baseBullet = new EnemyBullet(locationX, locationY, speedX, speedY, power);

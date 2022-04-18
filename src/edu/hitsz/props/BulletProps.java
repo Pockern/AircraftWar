@@ -14,7 +14,7 @@ public class BulletProps extends AbstractProps {
     }
 
     @Override
-    public void useProps(List<EnemyAircraft> aircraftList) {
+    public void useProps() {
         AbstractAircraft aircraft = HeroAircraft.getHeroAircraft();
         aircraft.setShootStrategy( new Scattering() );
     }

@@ -15,60 +15,67 @@ class Game {
 }
 
 interface AircraftFactory {
-    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
+    + createAircraft(): EnemyAircraft
 }
 
 class MobEnemyFactory implements AircraftFactory {
-    - aircraft: List<AbstractAircraft>
     + MobEnemyFactory()
-    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
+    + createAircraft(): EnemyAircraft
 }
 
 class EliteEnemyFactory implements AircraftFactory {
-    - aircraft: List<AbstractAircraft>
     + EliteEnemyFactory()
-    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
+    + createAircraft(): EnemyAircraft
 }
 
 class BossEnemyFactory implements AircraftFactory {
-    - aircraft: List<AbstractAircraft>
-    + BossEnemy()
-    + createAircraft(int locationX, int locationY, int speedX, int speedY, int hp): List<AbstractAircraft>
+    + BossEnemyFactory()
+    + createAircraft(): EnemyAircraft
 }
 
 abstract class AbstractAircraft {
     # maxHp: int
     # hp   : int
+    # shootNum: int
+    # power: int
+    # shootDirection: int
+    # shootStrategy: ShootStrategy
 
-    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy)
+    + setShootStrategy(ShootStrategy shootStrategy): void
+    + shoot(): List<BaseBullet>
     + decreaseHp(int decrease): void
     + increaseHp(int increase): void
+    + setHp(int hp): void
+    + setShootNum(int shootNum): void
+    + setShootDirection(int shootDirection): void
+    + setPower(int power): void
     + getHp(): int
-    + {abstract} shoot(): List<BaseBullet>
+    + getShootNum(): int
+    + getShootDirection(): int
+    + getPower(): int
 }
 
 class MobEnemy extends AbstractAircraft {
 
-    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy)
     + forward(): void
-    + shoot(): List<BaseBullet>
+    + dropProps(): List<AbstractProps>
 }
 
 class EliteEnemy extends AbstractAircraft {
-    - bullet_direction: int
-    - shootNum: int
-    - power: int
+    - propsList: List<AbstractProps>
 
-    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy)
     + forward(): void
-    + shoot(): List<BaseBullet>
+    + dropProps(): List<AbstractProps>
 }
 
 class BossEnemy extends AbstractAircraft {
 
-    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward(): void
-    + shoot(): List<BaseBullet>
+        + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp, int shootNum, int power, int shootDirection, ShootStrategy shootStrategy)
+        + forward(): void
+        + dropProps(): List<AbstractProps>
 }
 
 @enduml

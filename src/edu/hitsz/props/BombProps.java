@@ -14,7 +14,7 @@ public class BombProps extends AbstractProps{
     }
 
     @Override
-    public void useProps(List<EnemyAircraft> aircraftList) {
+    public void useProps() {
         //TODO 飞机是消了，但是分数没有加上啊
 //        for(EnemyAircraft enemyAircraft : aircraftList) {
 //            if(enemyAircraft instanceof MobEnemy || enemyAircraft instanceof EliteEnemy) {

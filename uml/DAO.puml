@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Game .right.> ScoreDao
+ScoreDaoImpl .up.|> ScoreDao
+ScoreDaoImpl -left-> ScoreRecord
+
+class Game {
+
+}
+
+interface ScoreDao {
+    findByPlayerName(String playerName): ScoreRecord
+    getAllScoreRecord(): List<ScoreRecord>
+    doAdd(ScoreRecord scoreRecord): void
+    doDelete(): void
+}
+
+class ScoreRecord {
+    - playerName: String
+    - score: int
+    - dateNow: String
+
+    + ScoreRecord(String playerName, int score, String dateNow)
+    + toString(): String
+    + getPlayerName(): String
+    + setPlayerName(String playerName): void
+    + getScore(): int
+    + setScore(): void
+    + getDateNow(): String
+    + setDateNow(String dateNow): void
+}
+
+class ScoreDaoImpl {
+    - file: File
+    - scoreRecords: List<ScoreRecord>
+
+    + ScoreDaoImpl()
+    + findByPlayerName(String playerName): ScoreRecord
+    + getAllScoreRecord(): List<ScoreRecord>
+    + doAdd(ScoreRecord scoreRecord): void
+    + doDelete(): void
+}
+
+@enduml
